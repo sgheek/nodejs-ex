@@ -238,18 +238,16 @@
                   }
                 ],
                 "readinessProbe": {
-                  "timeoutSeconds": 3,
-                  "initialDelaySeconds": 3,
-                  "httpGet": {
-                    "path": "/pagecount",
+                  "periodSeconds": 10,
+                  "initialDelaySeconds": 5,
+                  "tcpSocket": {
                     "port": 8080
                   }
                 },
                 "livenessProbe": {
-                  "timeoutSeconds": 3,
-                  "initialDelaySeconds": 30,
-                  "httpGet": {
-                    "path": "/pagecount",
+                  "periodSeconds": 20,
+                  "initialDelaySeconds": 15,
+                  "tcpSocket": {
                     "port": 8080
                   }
                 },
