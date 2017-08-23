@@ -1,4 +1,4 @@
-var server   = require('../server'),
+/*var server   = require('../server'),
     chai     = require('chai'),
     chaiHTTP = require('chai-http'),
     should   = chai.should();
@@ -28,4 +28,4 @@ describe('Basic routes tests', function() {
         })
 
     })
-})
+})*/

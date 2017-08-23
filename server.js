@@ -1,5 +1,5 @@
 //  OpenShift sample Node application
-var express = require('express'),
+/*var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
@@ -104,4 +104,43 @@ initDb(function(err){
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
-module.exports = app ;
+module.exports = app ;*/
+
+
+
+var net = require('net');
+
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0';
+
+var server = net.createServer();
+server.on('connection', handleConnection);
+
+server.listen(port, function() {
+  console.log('server listening to %j', server.address());
+});
+
+function handleConnection(conn) {
+  var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
+  console.log('new client connection from %s', remoteAddress);
+
+  conn.on('data', onConnData);
+  conn.once('close', onConnClose);
+  conn.on('error', onConnError);
+
+  function onConnData(d) {
+    console.log('connection data from %s: %j', remoteAddress, d);
+    conn.write(d);
+  }
+
+  function onConnClose() {
+    console.log('connection from %s closed', remoteAddress);
+  }
+
+  function onConnError(err) {
+    console.log('Connection %s error: %s', remoteAddress, err.message);
+  }
+}
+
+
+
